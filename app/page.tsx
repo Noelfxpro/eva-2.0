@@ -49,11 +49,11 @@ function hexToBytes(hex: string): Uint8Array {
   ))
 }
 
-async function verifyEd25519(sig: string, msg: string, pk: string): Promise<boolean> {
-  try {
-    const key = await crypto.subtle.importKey('raw', hexToBytes(pk), { name: 'Ed25519' }, false, ['verify'])
-    return await crypto.subtle.verify('Ed25519', key, hexToBytes(sig), new TextEncoder().encode(msg))
-  } catch { return false }
+async function verifyEd25519(sig: string, msg: string, pk: string): Promise<boolean> {    
+  try {    
+    const key = await crypto.subtle.importKey('raw', hexToBytes(pk).buffer as ArrayBuffer, { name: 'Ed25519' }, false, ['verify'])    
+    return await crypto.subtle.verify('Ed25519', key, hexToBytes(sig).buffer as ArrayBuffer, new TextEncoder().encode(msg))    
+  } catch { return false }    
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
